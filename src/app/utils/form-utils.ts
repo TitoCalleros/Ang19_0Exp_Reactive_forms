@@ -1,4 +1,4 @@
-import { FormGroup } from "@angular/forms";
+import { FormArray, FormGroup } from "@angular/forms";
 
 export class FormUtils {
 
@@ -10,6 +10,31 @@ export class FormUtils {
     if ( !form.controls[fieldName] ) return null;
 
     const errors = form.controls[fieldName].errors ?? {};
+
+    for (const key of Object.keys(errors)) {
+      switch (key) {
+        case 'required':
+          return 'Este campo es requerido';
+
+        case 'minlength':
+          return `Mínimo de ${ errors['minlength'].requiredLength } caracteres`;
+
+        case 'min':
+          return `Valor mínimo de ${errors['min'].min }`;
+      }
+    }
+
+    return null;
+  }
+
+  static isValidFieldInArray( formArray: FormArray, index: number): boolean | null {
+    return formArray.controls[index].errors && formArray.controls[index].touched;
+  }
+
+  static getFieldErrorInArray( formArray: FormArray, index: number ): string | null {
+    if ( !formArray.controls[index] ) return null;
+
+    const errors = formArray.controls[index].errors ?? {};
 
     for (const key of Object.keys(errors)) {
       switch (key) {

@@ -5,8 +5,8 @@
 
     <!-- Nombre -->
     <div class="mb-3 row">
-        <label class="col-sm-3 col-form-label">Nombre</label>
-        <div class="col-sm-9">
+        <label class="col-sm-2 col-form-label">Nombre</label>
+        <div class="col-sm-10">
             <input class="form-control"
                    placeholder="Nombre de la persona"
                    formControlName="name">
@@ -21,11 +21,11 @@
 
     <!-- Agregar Favorito -->
     <div class="mb-3 row">
-        <label class="col-sm-3 col-form-label">Agregar</label>
-        <div class="col-sm-9">
+        <label class="col-sm-2 col-form-label">Agregar</label>
+        <div class="col-sm-10">
 
             <div class="input-group">
-                <input class="form-control"
+                <input class="form-control me-2"
                        placeholder="Agregar favorito">
 
 
@@ -40,23 +40,26 @@
 
     <!-- Lista de Juegos Favoritos -->
     <div class="mb-3 row">
-        <label class="col-sm-3 col-form-label">Favoritos</label>
-        <div class="col-sm-9" formArrayName="favoriteGames" >
+        <label class="col-sm-2 col-form-label">Favoritos</label>
+        <div class="col-sm-10" formArrayName="favoriteGames" >
 
           @for (item of favoriteGames.controls; track $index; let i = $index) {
             <div class="mb-1">
 
                 <div class="input-group">
-                    <input class="form-control" [formControlName]="i">
+                    <input class="form-control me-2" [formControlName]="i">
 
                     <button class="btn btn-outline-danger"
                             type="button">
                       Eliminar
                   </button>
                 </div>
-                <span class="form-text text-danger">
-                   Este campo es requerido
-                </span>
+                @if (formUtils.isValidFieldInArray(favoriteGames, i)) {
+                  <span class="form-text text-danger">
+                     {{ formUtils.getFieldErrorInArray(favoriteGames, i) }}
+                  </span>
+
+                }
 
             </div>
 
