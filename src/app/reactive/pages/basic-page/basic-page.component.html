@@ -16,10 +16,13 @@
                            formControlName="name"
                            placeholder="Nombre del producto">
 
-                    <span class="form-text text-danger">
-                        <!-- Debe de ser de 3 letras -->
-                        error message
-                    </span>
+                    @if (myForm.controls.name.errors) {
+                      <span class="form-text text-danger">
+                          <!-- Debe de ser de 3 letras -->
+                          {{ myForm.controls.name.errors | json }}
+                      </span>
+
+                    }
                 </div>
             </div>
 
@@ -83,6 +86,11 @@
 
         <span>Touched</span>
         <pre>{{ myForm.touched| json }}</pre>
+
+        <span>Errores</span>
+        <pre>{{ myForm.controls["name"].errors | json }}</pre>
+        <pre>{{ myForm.controls['price'].errors | json }}</pre>
+        <pre>{{ myForm.controls['inStorage'].errors | json }}</pre>
 
         <span>Value</span>
         <pre>{{ myForm.value| json }}</pre>
