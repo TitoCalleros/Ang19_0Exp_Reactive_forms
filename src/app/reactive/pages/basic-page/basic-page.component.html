@@ -16,10 +16,10 @@
                            formControlName="name"
                            placeholder="Nombre del producto">
 
-                    @if (myForm.controls.name.errors) {
+                    @if (isValidField('name')) {
                       <span class="form-text text-danger">
                           <!-- Debe de ser de 3 letras -->
-                          {{ myForm.controls.name.errors | json }}
+                          {{ getFieldError('name') }}
                       </span>
 
                     }
@@ -34,9 +34,12 @@
                            class="form-control"
                            formControlName="price"
                            placeholder="Precio del producto">
-                    <span class="form-text text-danger">
-                        El precio debe de ser 0 o mayor
-                    </span>
+
+                    @if (isValidField('price')) {
+                      <span class="form-text text-danger">
+                          {{ getFieldError('price') }}
+                      </span>
+                    }
                 </div>
             </div>
 
@@ -49,9 +52,12 @@
                            formControlName="inStorage"
                            placeholder="Existencias del producto">
 
-                    <span class="form-text text-danger">
-                         Las existencias deben de ser 0 o mayor
-                    </span>
+                    @if (isValidField('inStorage')) {
+                      <span class="form-text text-danger">
+                        <!-- Debe de ser de 3 letras -->
+                        {{ getFieldError('inStorage') }}
+                      </span>
+                    }
                 </div>
             </div>
 
@@ -96,7 +102,7 @@
         <pre>{{ myForm.value| json }}</pre>
 
         <span>Precio</span>
-        <pre>{{ myForm.controls.price.value  | json }}</pre>
+        <pre>{{ myForm.controls['price'].value  | json }}</pre>
 
         <span>Producto</span>
         <pre>{{ myForm.controls['name'].value | json }}</pre>
