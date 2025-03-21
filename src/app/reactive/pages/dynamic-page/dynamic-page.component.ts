@@ -19,12 +19,33 @@ export class DynamicPageComponent {
     favoriteGames: this.fb.array([
       ['Metal Gear', Validators.required],
       ['Death Stranding', Validators.required],
-    ], Validators.minLength(3))
+    ], [Validators.required, Validators.minLength(3)])
   });
+
+  newFavorite = this.fb.control('', Validators.required);
 
 
   public get favoriteGames() {
     return this.myForm.get('favoriteGames') as FormArray;
+  }
+
+  addFavorite(): void {
+    if ( this.newFavorite.invalid ) return;
+
+    const newGame = this.newFavorite.value;
+
+    this.favoriteGames.push(this.fb.control(newGame, Validators.required));
+
+    this.newFavorite.reset();
+  }
+
+  removeFavorite(index: number): void {
+    console.log(index);
+    this.favoriteGames.removeAt(index);
+  }
+
+  onSubmit() {
+    this.myForm.markAllAsTouched();
   }
 
 }

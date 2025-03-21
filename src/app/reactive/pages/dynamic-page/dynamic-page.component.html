@@ -1,7 +1,7 @@
 <h2>Reactivos: <small> Dinámicos </small></h2>
 <hr>
 
-<form autocomplete="off" [formGroup]="myForm">
+<form autocomplete="off" [formGroup]="myForm" (ngSubmit)="onSubmit()" >
 
     <!-- Nombre -->
     <div class="mb-3 row">
@@ -26,11 +26,14 @@
 
             <div class="input-group">
                 <input class="form-control me-2"
-                       placeholder="Agregar favorito">
+                       placeholder="Agregar favorito"
+                       [formControl]="newFavorite">
 
 
                 <button class="btn btn-outline-primary"
-                        type="button">
+                        type="button"
+                        (click)="addFavorite()"
+                        >
                     Agregar favorito
                 </button>
             </div>
@@ -43,14 +46,15 @@
         <label class="col-sm-2 col-form-label">Favoritos</label>
         <div class="col-sm-10" formArrayName="favoriteGames" >
 
-          @for (item of favoriteGames.controls; track $index; let i = $index) {
+          @for (item of favoriteGames.controls; track item; let i = $index) {
             <div class="mb-1">
 
                 <div class="input-group">
                     <input class="form-control me-2" [formControlName]="i">
 
                     <button class="btn btn-outline-danger"
-                            type="button">
+                            type="button"
+                            (click)="removeFavorite(i)" >
                       Eliminar
                   </button>
                 </div>
@@ -65,6 +69,13 @@
 
           }
 
+          @if (formUtils.isValidField(myForm, 'favoriteGames')) {
+            <span class="form-text text-danger">
+              Debe contener al menos 3 juegos favoritos
+            </span>
+
+          }
+
         </div>
     </div>
 
@@ -74,8 +85,9 @@
         <div class="col-sm-12">
             <button type="submit"
                     class="btn btn-primary float-end"
+
                     >
-                    <!-- [disabled]="myForm.invalid" -->
+
                 Guardar
             </button>
         </div>
@@ -95,5 +107,5 @@
 <br>
 
 <span>Agregar Juego</span>
-<pre>{{ myForm.controls['favoriteGames'].value| json }}</pre>
+<pre>{{ myForm.controls['favoriteGames'].errors | json }}</pre>
 <pre>{{ myForm.controls['favoriteGames'].value | json }}</pre>
