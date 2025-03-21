@@ -29,7 +29,9 @@ export class DynamicPageComponent {
     return this.myForm.get('favoriteGames') as FormArray;
   }
 
-  addFavorite(): void {
+  addFavorite(event: Event): void {
+    event.preventDefault();
+
     if ( this.newFavorite.invalid ) return;
 
     const newGame = this.newFavorite.value;
@@ -45,6 +47,7 @@ export class DynamicPageComponent {
   }
 
   onSubmit() {
+    console.log(this.myForm.value);
     this.myForm.markAllAsTouched();
   }
 

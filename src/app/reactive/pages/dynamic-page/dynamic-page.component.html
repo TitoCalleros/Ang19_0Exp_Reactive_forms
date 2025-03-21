@@ -27,12 +27,16 @@
             <div class="input-group">
                 <input class="form-control me-2"
                        placeholder="Agregar favorito"
-                       [formControl]="newFavorite">
-
+                       [formControl]="newFavorite"
+                       (keydown.enter)="addFavorite($event)"
+                       (keydown.enter)="$event.preventDefault()"
+                       >
+                       <!-- Forma en como se puede anular que se mande el submit del formulario, se ejecutan múltiples  -->
+                       <!-- (keydown.enter)="$event.preventDefault()" -->
 
                 <button class="btn btn-outline-primary"
                         type="button"
-                        (click)="addFavorite()"
+                        (click)="addFavorite($event)"
                         >
                     Agregar favorito
                 </button>
