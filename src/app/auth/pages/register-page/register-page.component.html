@@ -13,7 +13,8 @@
                     <input type="text"
                            class="form-control"
                            placeholder="Nombre del usuario"
-                           formControlName="name">
+                           formControlName="name"
+                           >
 
                     @if (formUtils.isValidField(myForm, 'name')) {
                       <span class="form-text text-danger">
@@ -33,7 +34,7 @@
                            formControlName="email">
                     @if (formUtils.isValidField(myForm, 'email')) {
                       <span class="form-text text-danger">
-                        {{ formUtils.getFieldError(myForm, 'email') }}
+                        {{ formUtils.getFieldError(myForm, 'email', 'Error personalizado en el email') }}
                       </span>
                     }
                 </div>
@@ -115,17 +116,17 @@
 <pre>{{ myForm.value | json }}</pre>
 
 <h5>Nombre</h5>
-<pre>{{ myForm.controls['name'].value | json }}</pre>
+<pre>{{ myForm.controls['name'].errors | json }}</pre>
 
 <h5>Email</h5>
-<pre>{{ myForm.controls['email'].value | json }}</pre>
+<pre>{{ myForm.controls['email'].errors | json }}</pre>
 
 <h5>Username</h5>
-<pre>{{ myForm.controls['username'].value | json }}</pre>
+<pre>{{ myForm.controls['username'].errors | json }}</pre>
 
 
 <h5>Password</h5>
-<pre>{{ myForm.controls['password'].value | json }}</pre>
+<pre>{{ myForm.controls['password'].errors | json }}</pre>
 
 <h5>Confirmar</h5>
-<pre>{{ myForm.controls['confirmPassword'].value | json }}</pre>
+<pre>{{ myForm.controls['confirmPassword'].errors | json }}</pre>

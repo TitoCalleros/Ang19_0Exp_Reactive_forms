@@ -2,16 +2,21 @@ import { FormArray, FormGroup, ValidationErrors } from "@angular/forms";
 
 export class FormUtils {
 
+  // Expresiones regulares
+  static namePattern = '([a-zA-Z]+) ([a-zA-Z]+)';
+  static emailPattern = '^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$';
+  static notOnlySpacesPattern = '^[a-zA-Z0-9]+$';
+
   static isValidField( form: FormGroup, fieldName: string ): boolean | null {
     return (form.controls[fieldName].errors && form.controls[fieldName].touched);
   }
 
-  static getFieldError( form: FormGroup, fieldName: string ): string | null {
+  static getFieldError( form: FormGroup, fieldName: string, errorMessage: string = '' ): string | null {
     if ( !form.controls[fieldName] ) return null;
 
     const errors = form.controls[fieldName].errors ?? {};
 
-    return FormUtils.processErrors(errors);
+    return FormUtils.processErrors(errors, errorMessage);
   }
 
   static isValidFieldInArray( formArray: FormArray, index: number): boolean | null {
@@ -27,7 +32,7 @@ export class FormUtils {
   }
 
 
-  private static processErrors(errors: ValidationErrors): string | null {
+  private static processErrors(errors: ValidationErrors, errorMessage: string = ''): string | null {
     for (const key of Object.keys(errors)) {
       switch (key) {
         case 'required':
@@ -41,6 +46,16 @@ export class FormUtils {
 
         case 'email':
           return 'El formato de email no es válido';
+
+        case 'pattern':
+          if ( errors['pattern'].requiredPattern === FormUtils.emailPattern ) {
+            return 'El valor ingresado no parece un corro electrónico';
+          }
+          return 'Error de patrón contra expresión regular';
+
+        default:
+          debugger;
+          return errorMessage.length === 0 ? `Error de validación no controlado (${key})` : errorMessage;
       }
     }
 
