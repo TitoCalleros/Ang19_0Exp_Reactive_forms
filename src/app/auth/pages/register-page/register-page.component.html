@@ -70,6 +70,12 @@
                           La contraseña debe de ser mayor de 6 caracteres.
                       </span>
                     }
+
+                    @if (myForm.errors && myForm.touched) {
+                      <span class="form-text text-danger">
+                          Las contraseñas deben de ser iguales
+                      </span>
+                    }
                 </div>
             </div>
 
