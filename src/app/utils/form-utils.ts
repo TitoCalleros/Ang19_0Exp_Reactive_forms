@@ -1,5 +1,15 @@
 import { AbstractControl, FormArray, FormGroup, ValidationErrors } from "@angular/forms";
 
+async function sleep() {
+  return new Promise( resolve => {
+    setTimeout(() => {
+      resolve(true);
+    }, 2500);
+
+  });
+}
+
+
 export class FormUtils {
 
   // Expresiones regulares
@@ -41,6 +51,22 @@ export class FormUtils {
     };
   }
 
+  static async checkingServerResponse( control: AbstractControl ): Promise<ValidationErrors | null> {
+
+    console.log('Validando en servidor');
+
+
+    await sleep();
+
+    const formValue = control.value;
+
+    if (formValue === 'hola@mundo.com') {
+      return { emailTaken: true };
+    }
+
+    return null;
+  }
+
 
   private static processErrors(errors: ValidationErrors, errorMessage: string = ''): string | null {
     for (const key of Object.keys(errors)) {
@@ -63,8 +89,10 @@ export class FormUtils {
           }
           return 'Error de patrón contra expresión regular';
 
+        case 'emailTaken':
+          return 'El email ya esta en uso';
+
         default:
-          debugger;
           return errorMessage.length === 0 ? `Error de validación no controlado (${key})` : errorMessage;
       }
     }

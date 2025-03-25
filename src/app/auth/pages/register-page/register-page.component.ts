@@ -16,14 +16,13 @@ export class RegisterPageComponent {
 
   myForm: FormGroup = this.fb.group({
     name: ['', [Validators.required, Validators.pattern(this.formUtils.namePattern)]],
-    email: ['', [Validators.required, Validators.pattern(this.formUtils.emailPattern)]],
+    email: ['', [Validators.required, Validators.pattern(this.formUtils.emailPattern)], [FormUtils.checkingServerResponse]],
     username: ['', [Validators.required, Validators.minLength(6), Validators.pattern(this.formUtils.notOnlySpacesPattern)]],
     password: ['', [Validators.required, Validators.minLength(6)]],
     confirmPassword: ['', [Validators.required]],
   }, {
     validators: [FormUtils.areFieldsValueEqual('password', 'confirmPassword')]
   });
-
 
 
   onSubmit() {

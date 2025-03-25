@@ -87,12 +87,6 @@
                            class="form-control"
                            placeholder="Confirmar la contraseña"
                            formControlName="confirmPassword">
-
-                    @if (formUtils.isValidField(myForm, 'confirmPassword')) {
-                      <span class="form-text text-danger">
-                          Las contraseñas deben de ser iguales
-                      </span>
-                    }
                 </div>
             </div>
 
@@ -100,7 +94,8 @@
             <div class="row">
                 <div class="col">
                     <button class="btn btn-primary float-end"
-                            type="submit">
+                            type="submit"
+                            [disabled]="myForm.pending || myForm.invalid" >
                         Crear
                     </button>
                 </div>
