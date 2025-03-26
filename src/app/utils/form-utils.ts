@@ -67,6 +67,17 @@ export class FormUtils {
     return null;
   }
 
+  static checkingUsername( control: AbstractControl ): ValidationErrors | null {
+
+    const formValue = control.value;
+
+    if (formValue === 'straider') {
+      return { usernameTaken: true };
+    }
+
+    return null;
+  }
+
 
   private static processErrors(errors: ValidationErrors, errorMessage: string = ''): string | null {
     for (const key of Object.keys(errors)) {
@@ -91,6 +102,9 @@ export class FormUtils {
 
         case 'emailTaken':
           return 'El email ya esta en uso';
+
+          case 'usernameTaken':
+            return 'El username ya esta en uso';
 
         default:
           return errorMessage.length === 0 ? `Error de validación no controlado (${key})` : errorMessage;
